@@ -1,0 +1,68 @@
+//
+//  MainScreen.swift
+//  ReferenceiOS
+//
+//  Created by Nourhan on 30/08/2026.
+//  Copyright © 2026 ABN AMRO. All rights reserved.
+//
+
+import Foundation
+import XCTest
+
+class MainScreen {
+    
+    let button = XCUIApplication().buttons.matching(identifier: "Button").firstMatch
+
+    func tapButton() {
+        button.tap()
+    }
+    
+    func getText() -> String {
+        let label = XCUIApplication().staticTexts.matching(identifier: "label").firstMatch.label
+        
+        return label
+    }
+    
+    func getCurrency() -> Character {
+        let amount = XCUIApplication().staticTexts.matching(identifier: "label").firstMatch.label
+        let fullAmountArray = Array(amount)
+        let currency = fullAmountArray[0]
+        
+        return currency
+    }
+    
+    func getDecimalSeparator(separator: Character) -> String {
+        let amount = XCUIApplication().staticTexts.matching(identifier: "label").firstMatch.label
+        guard let separatorIndex = amount.firstIndex(of: separator) else {
+            XCTFail("Invalid amount format: No decimal point found")
+            return ""
+        }
+        
+        // Ensure that the separator is found just before the decimals not at a separator between the amount digits
+        let separatorIndexAsInt = amount.distance(from: amount.startIndex, to: separatorIndex)
+        let amountArrayCount = Array(amount).count
+        let distance = amountArrayCount - separatorIndexAsInt
+        if(distance == 3){
+            return String(amount[separatorIndex])
+        }
+        else {
+            XCTFail("Invalid amount format: No decimal point found")
+            return ""
+        }
+    }
+    
+    func getDecimalCount() -> Int {
+        let amount = XCUIApplication().staticTexts.matching(identifier: "label").firstMatch.label
+        guard let separatorIndex = amount.firstIndex(of: ",") else {
+            XCTFail("Invalid amount format: No decimal point found")
+            
+            return 0
+        }
+        let decimalIndex = amount.index(after: separatorIndex)
+        let decimalIndexAsInt = amount.distance(from: amount.startIndex, to: decimalIndex)
+        let amountArrayCount = Array(amount).count
+        let decimalCount = amountArrayCount - decimalIndexAsInt
+        
+        return decimalCount
+    }
+}
