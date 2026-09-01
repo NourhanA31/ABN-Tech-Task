@@ -32,4 +32,31 @@ class DefaultLocaleTests: XCTestCase {
         
         XCTAssertNotEqual(currentValue, intialValue, "The text doesn't change after tapping the button")
     }
+    
+    // This test case validates that the amount is starting with the currency.
+    func testCurrencyAppearnce() {
+        let mainScreen = MainScreen()
+        mainScreen.tapButton()
+        let currency = mainScreen.getCurrency()
+        
+        XCTAssertEqual(currency, "€", "The amount is not starting with euro currency")
+    }
+        
+    // This test case validates that the decimal separator is comma
+    func testDecimalSeparator() {
+        let mainScreen = MainScreen()
+        mainScreen.tapButton()
+        let decimalSeparator = mainScreen.getDecimalSeparator(separator: ",")
+            
+        XCTAssertEqual(decimalSeparator, ",", "The decimal separator is not matching the locale")
+    }
+        
+    //This test case validates that the decimal count of the amount is 2
+    func testAmountDecimalCount() {
+        let mainScreen = MainScreen()
+        mainScreen.tapButton()
+        let decimalCount = mainScreen.getDecimalCount()
+            
+        XCTAssertEqual(decimalCount, 2, "The decimal number for the amount is not equal 2")
+    }
 }
