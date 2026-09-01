@@ -1,7 +1,8 @@
 default_platform(:ios)
 
 before_all do
-  setup_jenkins
+  setup_ci if ENV['CI']
+  setup_jenkins if ENV['JENKINS_URL']
 end
 
 platform :ios do
@@ -28,7 +29,15 @@ platform :ios do
 
   desc "Run UI tests"
   lane :test_ui do
-    scan(scheme: "ReferenceiOSUITests")
+    scan(scheme: "ReferenceiOSUITests/FunctionalTests")
+  end
+
+  desc "Run accessibility tests"
+  lane :test_a11y do
+    scan(
+      scheme: "ReferenceiOS",
+      only_testing: ["ReferenceiOSUITests/A11yTests"]
+    )
   end
 
   desc "Build the app"
