@@ -29,7 +29,10 @@ platform :ios do
 
   desc "Run UI tests"
   lane :test_ui do
-    scan(scheme: "ReferenceiOSUITests/FunctionalTests")
+    scan(
+    scheme: "ReferenceiOS",
+    only_testing: ["ReferenceiOSUITests/FunctionalTests"]
+  )
   end
 
   desc "Run accessibility tests"
