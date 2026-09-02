@@ -24,22 +24,28 @@ platform :ios do
 
   desc "Run unit tests"
   lane :test_unit do
-    scan(scheme: "ReferenceiOS")
+    scan(
+      scheme: "ReferenceiOS",
+      only_testing: ["ReferenceiOSTests/CurrencyHelperTests"]
+    )
   end
 
   desc "Run UI tests"
   lane :test_ui do
     scan(
-    scheme: "ReferenceiOS",
-    only_testing: ["ReferenceiOSUITests/FunctionalTests"]
-  )
+      scheme: "ReferenceiOS",
+      only_testing: [
+        "ReferenceiOSUITests/DefaultLocaleTests",
+        "ReferenceiOSUITests/DifferentLocaleTests"
+      ]
+    )
   end
 
   desc "Run accessibility tests"
   lane :test_a11y do
     scan(
       scheme: "ReferenceiOS",
-      only_testing: ["ReferenceiOSUITests/A11yTests"]
+      only_testing: ["ReferenceiOSUITests/MainScreenTests"]
     )
   end
 
